@@ -1,6 +1,6 @@
 {% set name = "mando" %}
-{% set version = "0.7.0" %}
-{% set sha256 = "5306a91109096fe2e204a1f5ae141038842193f7210a7930c8ee73ccb7ecbf62" %}
+{% set version = "0.7.1" %}
+{% set sha256 = "18baa999b4b613faefb00eac4efadcf14f510b59b924b66e08289aa1de8c3500" %}
 
 
 package:
