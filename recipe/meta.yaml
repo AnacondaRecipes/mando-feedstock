@@ -15,19 +15,15 @@ build:
   skip: true  # [py<310]
 
 requirements:
-  build:
-    - python
-    - setuptools
-  run:
-    - six
-    - python
   host:
     - python
     - pip
+    - setuptools
+    - wheel
+  run:
+    - python
 
 test:
-  # source_files:
-  #   - tests
   imports:
     - mando
     - mando.core
