@@ -1,44 +1,52 @@
 {% set name = "mando" %}
-{% set version = "0.7.0" %}
-{% set sha256 = "5306a91109096fe2e204a1f5ae141038842193f7210a7930c8ee73ccb7ecbf62" %}
-
+{% set version = "0.8.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 539659d9a2fdc6c9a188211c58f381e0dafe9597085174c5472eb1ed0224b6b5
 
 build:
-  noarch: python
   number: 0
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build:
+  host:
     - python
+    - pip
     - setuptools
+    - wheel
   run:
-    - six
     - python
 
 test:
   imports:
     - mando
+    - mando.core
+    - mando.napoleon
+    - mando.utils
+  requires:
+    - pip
+    - pytest
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest --pyargs mando.tests
 
 about:
   home: https://github.com/rubik/mando
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: 'Create Python CLI apps with little to no effort at all!'
-
+  summary: Mando is a wrapper around argparse.
   description: |
-    mando is a wrapper around argparse, and allows you to write complete CLI applications 
-    in seconds while maintaining all the flexibility.
+    mando is a wrapper around argparse, and allows you to write complete
+    CLI applications in seconds while maintaining all the flexibility.
+  doc_url: https://mando.readthedocs.io
+  dev_url: https://github.com/rubik/mando
 
 extra:
   recipe-maintainers:
